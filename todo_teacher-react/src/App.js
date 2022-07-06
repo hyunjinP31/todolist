@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useRef, useReducer } from 'react';
+import { useState, useRef, useReducer, useCallback } from 'react';
 import TodoLists from './Components/TodoLists';
 import CreateTodo from './Components/CreateTodo';
 
@@ -124,7 +124,7 @@ function App() {
       text : e.target.value,
     })
   }
-  const onCreate = ()=>{
+  const onCreate = useCallback(()=>{
     dispatch({
       type: "CREATE_TODO",
       todo : {
@@ -134,13 +134,13 @@ function App() {
       },
     })
     nextId.current += 1;
-  }
-  const onDelete = (id)=>{
+  })
+  const onDelete = useCallback((id)=>{
     dispatch({
       type: "DELETE_TODO",
       id: id,
     })
-  }
+  },[])
   const onToggle = (id)=>{
     dispatch({
       type: "ACTIVE_TODO",
